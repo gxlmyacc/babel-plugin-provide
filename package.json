@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-provide",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "a babel provide that like webpack-provide-plugin",
   "keywords": [
     "babel",
@@ -8,7 +8,7 @@
     "provide"
   ],
   "sideEffects": false,
-  "main": "src/index.js",
+  "main": "esm/index.js",
   "module": "esm/index.js",
   "engines": {
     "node": "> 6.9.1"
