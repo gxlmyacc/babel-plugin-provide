@@ -3,6 +3,8 @@
 const _require = require('@babel/helper-plugin-utils'),
       declare = _require.declare;
 
+const t = require('@babel/types');
+
 function addDefaultImport(path, varName, libraryName) {
   path.unshiftContainer('body', t.importDeclaration([t.importDefaultSpecifier(t.identifier(varName))], t.stringLiteral(libraryName)));
 }
@@ -15,7 +17,7 @@ module.exports = declare(function (api) {
     if (!provides) return;
     const parent = path.parent;
     if (!parent) return;
-    if (['FunctionDeclaration', 'MemberExpression', 'VariableDeclarator'].includes(parent.type)) return;
+    if (['FunctionDeclaration', 'MemberExpression', 'VariableDeclarator', 'ImportDefaultSpecifier'].includes(parent.type)) return;
 
     if (parent.type === 'ObjectProperty' && parent.key === path.node) {
       return;
