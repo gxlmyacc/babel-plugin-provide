@@ -5,7 +5,7 @@
   "keywords": [
     "babel",
     "plugin",
-    "provde"
+    "provide"
   ],
   "sideEffects": false,
   "module": "esm/index.js",
