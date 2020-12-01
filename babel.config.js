@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   presets: [
     [
@@ -6,7 +8,7 @@ module.exports = {
         modules: 'commonjs',
         useBuiltIns: 'entry',
         corejs: 2,
-        targets: { browsers: ['Chrome >= 49'] }
+        targets: { browsers: ['Chrome >= 31'] }
       }
     ],
   ],
@@ -24,6 +26,13 @@ module.exports = {
     '@babel/plugin-proposal-export-namespace-from',
     '@babel/plugin-syntax-dynamic-import',
     '@babel/plugin-syntax-import-meta',
-    '@babel/plugin-transform-arrow-functions'
+    '@babel/plugin-transform-arrow-functions',
+    [
+      path.resolve('./src/index.js'), {
+        defines: {
+          aa: 1
+        }
+      }
+    ],
   ]
 };

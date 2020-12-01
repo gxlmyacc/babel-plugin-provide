@@ -1,61 +1,59 @@
 
-const { declare } = require('@babel/helper-plugin-utils');
-const t = require('@babel/types');
-const path = require('path');
+const {
+  getConstCache,
+  var2Expression
+} = require('./utils');
 
-module.exports = declare(api => {
-  api.assertVersion(7);
-
-  function IdentifierVisitor(path) {
-    if (!this.provides) return;
+module.exports = function ({ types: t }) {
+  function IdentifierVisitor(path, { opts, cache }) {
     const parent = path.parent;
     if (!parent) return;
+    if (['FunctionDeclaration', 'ClassMethod', 'ObjectMethod'].includes(parent.type)) return;
+    if (parent.type === 'ObjectProperty' && parent.key === path.node) return;
+    if (parent.type === 'MemberExpression' && parent.object !== path.node) return;
+    if (parent.type === 'VariableDeclarator' && parent.id === path.node) return;
 
-    if (['FunctionDeclaration', 'MemberExpression', 'VariableDeclarator', 'ImportDefaultSpecifier'].includes(parent.type)) return;
-    if (parent.type === 'ObjectProperty' && parent.key === path.node) {
-      return;
-    }
-
-    let identifier = path.node.name;
-    if (this.handled[identifier]) return;
-    this.handled[identifier] = true;
-
-    let provide = this.provides[identifier];
-    if (provide) {
-      this.addDefaultImport(identifier, provide);
+    const defines = (opts && opts.defines) || {};
+    const identifier = path.node.name;
+    if (identifier === '__filename') {
+      path.replaceWith(t.stringLiteral(cache.filename));
+    } else if (identifier === '__dirname') {
+      path.replaceWith(t.stringLiteral(cache.dirname));
+    } else if (identifier === '__now') {
+      path.replaceWith(t.stringLiteral(cache.now));
+    } else if (identifier === '__timestamp') {
+      path.replaceWith(t.numericLiteral(Date.now()));
+    } else if (defines[identifier] !== undefined) {
+      path.replaceWith(var2Expression(defines[identifier]));
+    } else if (cache.pkg) {
+      if (identifier === '__packagename') {
+        path.replaceWith(t.stringLiteral(cache.pkg.name));
+      } else if (identifier === '__packageversion') {
+        path.replaceWith(t.stringLiteral(cache.pkg.version));
+      }
     }
   }
 
   return {
-    name: 'babel-plugin-provide',
     visitor: {
       Program: {
-        enter(nodePath,
-          {
+        enter(path, state) {
+          const {
             file: {
               opts: { filename }
             },
-            opts = {}
-          }) {
-          const ctx = {
-            provides: opts,
-            handled: {},
-            addDefaultImport(varName, libraryName) {
-              libraryName = path.relative(path.dirname(filename), libraryName).replace(/\\/g, '/');
-              nodePath.unshiftContainer(
-                'body',
-                t.importDeclaration(
-                  [t.importDefaultSpecifier(t.identifier(varName))],
-                  t.stringLiteral(libraryName),
-                )
-              );
-            }
-          };
-          nodePath.traverse({
+            opts,
+          } = state;
+          const cache = getConstCache(filename);
+
+          path.traverse({
             Identifier: IdentifierVisitor
-          }, ctx);
+          }, {
+            cache,
+            opts
+          });
         },
       },
     }
   };
-});
+};
