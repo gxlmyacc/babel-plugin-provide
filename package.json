@@ -1,11 +1,11 @@
 {
-  "name": "babel-plugin-define-variables",
-  "version": "0.0.1",
-  "description": "a babel define vars that like webpack.DefinePlugin",
+  "name": "babel-plugin-provide",
+  "version": "0.0.5",
+  "description": "a babel provide that like webpack-provide-plugin",
   "keywords": [
     "babel",
     "plugin",
-    "define"
+    "provide"
   ],
   "sideEffects": false,
   "main": "esm/index.js",
@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gxlmyacc/babel-plugin-define-variables.git"
+    "url": "git+https://github.com/gxlmyacc/babel-plugin-provide.git"
   },
   "author": "gxlmyacc",
   "dependencies": {

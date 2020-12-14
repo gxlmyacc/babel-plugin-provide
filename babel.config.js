@@ -8,7 +8,7 @@ module.exports = {
         modules: 'commonjs',
         useBuiltIns: 'entry',
         corejs: 2,
-        targets: { browsers: ['Chrome >= 31'] }
+        targets: { browsers: ['Chrome >= 49'] }
       }
     ],
   ],
@@ -29,9 +29,9 @@ module.exports = {
     '@babel/plugin-transform-arrow-functions',
     [
       path.resolve('./src/index.js'), {
-        defines: {
-          aa: 1
-        }
+        _: 'lodash',
+        importJs: 'import-js',
+        $: 'jquery'
       }
     ],
   ]

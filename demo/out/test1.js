@@ -5,13 +5,21 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+var _jquery = _interopRequireDefault(require("../../jquery"));
+
+var _lodash = _interopRequireDefault(require("../../lodash"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function test() {
-  console.log('__filename', "/demo/src/test1.js");
-  console.log('__dirname', "/demo/src");
-  console.log('__now', "2020-12-01 16:53:50");
-  console.log('__timestamp', 1606812844739);
-  console.log('__packagename', "babel-plugin-define");
-  console.log('__packageversion', "0.0.1");
+  _lodash.default.defaultsDeep({}, {});
+
+  (0, _jquery.default)(document.body);
+
+  _jquery.default.each([], {});
+
+  let a;
+  a.$.dd('dd');
 }
 
 var _default = test;
