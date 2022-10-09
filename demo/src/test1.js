@@ -4,7 +4,8 @@ function test() {
    $.each([], {});
    let a;
    a.$.dd('dd');
-}
 
+   importJs('http://www.xxxx.com/something.js');
+}
 
 export default test;

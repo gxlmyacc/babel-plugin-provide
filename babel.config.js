@@ -1,6 +1,6 @@
 const path = require('path');
 
-module.exports = {
+const config = {
   presets: [
     [
       '@babel/preset-env',
@@ -27,12 +27,20 @@ module.exports = {
     '@babel/plugin-syntax-dynamic-import',
     '@babel/plugin-syntax-import-meta',
     '@babel/plugin-transform-arrow-functions',
-    [
-      path.resolve('./src/index.js'), {
-        _: 'lodash',
-        importJs: 'import-js',
-        $: 'jquery'
-      }
-    ],
   ]
 };
+
+module.exports = process.env.NODE_ENV === 'production'
+  ? config
+  : {
+    plugins: [
+      [
+        path.resolve('./src/index.js'),
+        {
+          _: 'lodash',
+          importJs: filename => `./${path.relative(path.dirname(filename), path.join(__dirname, 'demo/src/import-js')).replace(/\\/g, '/')}`,
+          $: 'jquery'
+        }
+      ],
+    ]
+  };

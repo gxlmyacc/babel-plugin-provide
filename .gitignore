@@ -10,6 +10,6 @@ analyzer/
 plugin/
 esm/
 demo/out/
-
+.history
 
 

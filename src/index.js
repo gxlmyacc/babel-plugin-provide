@@ -1,7 +1,7 @@
 
 const { declare } = require('@babel/helper-plugin-utils');
 const t = require('@babel/types');
-const path = require('path');
+// const path = require('path');
 
 module.exports = declare(api => {
   api.assertVersion(7);
@@ -30,18 +30,20 @@ module.exports = declare(api => {
     name: 'babel-plugin-provide',
     visitor: {
       Program: {
-        enter(nodePath,
-          {
+        enter(nodePath, state) {
+          const {
             file: {
               opts: { filename }
             },
             opts = {}
-          }) {
+          } = state;
+
           const ctx = {
             provides: opts,
             handled: {},
             addDefaultImport(varName, libraryName) {
-              libraryName = path.relative(path.dirname(filename), libraryName).replace(/\\/g, '/');
+              if (typeof libraryName === 'function') libraryName = libraryName(filename, state);
+              // libraryName = path.relative(path.dirname(filename), libraryName).replace(/\\/g, '/');
               nodePath.unshiftContainer(
                 'body',
                 t.importDeclaration(

@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-provide",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "a babel provide that like webpack-provide-plugin",
   "keywords": [
     "babel",
@@ -18,7 +18,7 @@
     "esm"
   ],
   "scripts": {
-    "build": "babel src -d esm",
+    "build": "cross-env NODE_ENV=production babel src -d esm",
     "prepare": "npm run build"
   },
   "repository": {
@@ -51,7 +51,7 @@
     "@babel/plugin-transform-strict-mode": "^7.2.0",
     "@babel/preset-env": "7.4.5",
     "babel-eslint": "^10.0.2",
-    "cross-env": "^5.2.0",
+    "cross-env": "^7.0.3",
     "eslint": "^6.0.1",
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-plugin-import": "^2.18.0"
