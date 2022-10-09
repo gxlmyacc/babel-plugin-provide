@@ -1,5 +1,5 @@
 # babel-plugin-provide
-a babel provide that like webpack-provode-plugin
+a babel provide that like webpack-provode-plugin that convert global variables to local references.
 
 ## installtion
 
