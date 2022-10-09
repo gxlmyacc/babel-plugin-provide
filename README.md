@@ -16,9 +16,10 @@ a babel provide that like webpack-provode-plugin that convert global variables t
 
 
 ```js
+// babel.config.js
+
 const path = require('path');
 
-// babel.config.js
 module.exports = {
   presets: [
   ],
@@ -54,7 +55,7 @@ export default test;
 
 ```
 
-source file will transform that:
+source file will be transformed that:
 
 ```js
 import importJs from "./import-js";
