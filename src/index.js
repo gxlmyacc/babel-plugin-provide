@@ -1,7 +1,6 @@
 
 const { declare } = require('@babel/helper-plugin-utils');
-const t = require('@babel/types');
-// const path = require('path');
+const { importDefaultSpecifier } = require('./utils');
 
 module.exports = declare(api => {
   api.assertVersion(7);
@@ -22,7 +21,7 @@ module.exports = declare(api => {
 
     let provide = this.provides[identifier];
     if (provide) {
-      this.addDefaultImport(identifier, provide);
+      this.addDefaultImport(path, identifier, provide);
     }
   }
 
@@ -41,16 +40,9 @@ module.exports = declare(api => {
           const ctx = {
             provides: opts,
             handled: {},
-            addDefaultImport(varName, libraryName) {
+            addDefaultImport(path, varName, libraryName) {
               if (typeof libraryName === 'function') libraryName = libraryName(filename, state);
-              // libraryName = path.relative(path.dirname(filename), libraryName).replace(/\\/g, '/');
-              nodePath.unshiftContainer(
-                'body',
-                t.importDeclaration(
-                  [t.importDefaultSpecifier(t.identifier(varName))],
-                  t.stringLiteral(libraryName),
-                )
-              );
+              libraryName && importDefaultSpecifier(path, varName, libraryName);
             }
           };
           nodePath.traverse({

@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 function test() {
    _.defaultsDeep({}, {});
    $(document.body);
