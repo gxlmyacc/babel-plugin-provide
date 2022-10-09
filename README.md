@@ -1,6 +1,9 @@
 # babel-plugin-provide
 a babel provide that like webpack-provode-plugin that convert global variables to local references.
 
+[![NPM version](https://img.shields.io/npm/v/babel-plugin-provide.svg?style=flat)](https://npmjs.com/package/babel-plugin-provide)
+[![NPM downloads](https://img.shields.io/npm/dm/babel-plugin-provide.svg?style=flat)](https://npmjs.com/package/babel-plugin-provide)
+
 ## installtion
 
 ```bash
